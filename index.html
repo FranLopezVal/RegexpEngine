@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>REGEXP TESTER</title>
+    <script type="module" src="./src/regexpRolz.js">
+
+    </script>
+    <style>
+        :root
+        {
+            --color-primary: #007bff;
+            --color-secondary: #6c757d;
+            --color-success: #28a745;
+            --color-danger: #dc3545;
+            --color-warning: #ffc107;
+            --color-info: #17a2b8;
+            --color-light: #f8f9fa;
+            --color-dark: #343a40;
+            
+            --font: calibri, sans-serif;
+        }
+        body {
+            font-family: var(--font);
+            color: var(--color-dark);
+            background-color: var(--color-light);
+        }
+        textarea {
+            width: 200px;
+            height: 200px;
+        }
+        .container {
+            display: flex;
+            gap: 1rem;
+            justify-content: start;
+            align-items: start;
+            &.border {
+                border: 1px solid var(--color-secondary);
+                padding: 1rem;
+            }
+        }
+        .inputRegexp {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .inputMatch {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .btn {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .results {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <script type="module">
+    import { loadExpression  } from './src/regexpRolz.js';
+        const button = document.getElementById("testButton");
+        button.addEventListener("click", Test);
+        export function Test() {
+            let pattern = document.getElementById("inputRegexp").value;
+            let matchers = document.getElementById("inputText").value;
+            let result = document.getElementById("result");
+            let matches = matchers.split("\n");
+            let res = "";
+            let reg = loadExpression(pattern);
+            for (let i = 0; i < matches.length; i++) {
+                let match = matches[i];
+                
+                let r = reg(match);
+                res += r + "\n";
+            }
+            result.value = res;
+        }
+    </script>
+    <h1>Test Regexp Here</h1>
+    <p>Creado por Fran Lopez <a target="_blank" href="https://github.com/FranLopezVal/">Git Hub</a> </p>
+    <p> Proyecto de prueba de ejecucion paso por paso de un engine Regexp </p>
+    <p> No se recomienda su uso como Engine Regexp (solo es educativo), para eso ya tenemos el nativo del navegador.</p>
+    <div style="gap: 1rem;display: flex;">
+        <div class="container border">
+            <div class="inputRegexp">
+                <span>Regexp:</span>
+                <input type="text" id="inputRegexp">
+            </div>
+            <div class="inputMatch">
+                <span>Matches: //uno por linea</span>
+                <textarea id="inputText"></textarea>
+            </div>
+        </div>
+        <div class="container border">
+            <div class="btn">
+                <button id="testButton">Test</button>
+            </div>
+            <div class="results">
+                <span>Result:</span>
+                <textarea id="result" readonly></textarea>
+            </div>
+    
+        </div>
+    </div>
+</body>
+</html>
